@@ -21,19 +21,31 @@ use App\Http\Controllers\V1\AuthController;
 |
 */
 
+// Public GET Routes
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\V1'], function() {
+    // Publicly accessible routes for products, categories, features, and projects
+    Route::get('products', [ProductController::class, 'index']);
+    Route::get('categories', [CategoryController::class, 'index']);
+    Route::get('projects', [ProjectController::class, 'index']);
+    Route::get('features', [FeatureController::class, 'index']);
+    Route::get('testimonials', [TestimonialController::class, 'index']);
+   
+});
+
+
+// Protected Routes, only accessible via sanctum token authentication
 Route::group(['prefix' => 'v1', 'namespace' => 
     'App\Http\Controllers\V1', 'middleware' => 'auth:sanctum'], function() {
-        Route::apiResource('products', ProductController::class);
-        Route::apiResource('categories', CategoryController::class);
+        Route::apiResource('products', ProductController::class)->except(['index']);
+        Route::apiResource('categories', CategoryController::class)->except(['index']);
         Route::get('categories/check-unique/{name}', [CategoryController::class, 'checkUnique']);
 
-        Route::apiResource('projects', ProjectController::class);
-        Route::apiResource('features', FeatureController::class);
+        Route::apiResource('projects', ProjectController::class)->except(['index']);
+        Route::apiResource('features', FeatureController::class)->except(['index']);
         Route::get('features/check-unique/{description}', [FeatureController::class, 'checkUnique']);    // Route to check featre uniqueness
 
-        Route::apiResource('testimonials', TestimonialController::class);
+        Route::apiResource('testimonials', TestimonialController::class)->except(['index']);
 
-        
 });
 
 // Authentication routes

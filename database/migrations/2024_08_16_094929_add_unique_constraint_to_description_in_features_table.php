@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('features', function (Blueprint $table) {
-            $table->string('description')->unique()->change();
-        });
+        // Schema::table('features', function (Blueprint $table) {
+        //     $table->string('description')->unique()->change();
+        // });
     }
 
     /**
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('features', function (Blueprint $table) {
-            $table->string('description')->dropUnique()->change();
-        });
+        // Schema::table('features', function (Blueprint $table) {
+        //     $table->string('description')->dropUnique()->change();
+        // });
     }
 };
